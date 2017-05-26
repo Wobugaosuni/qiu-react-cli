@@ -10,6 +10,7 @@ A CLI for scaffolding React.js projects.
 
 ## Usage
 `$ react init`
+
 <br />
 
 ## Features
