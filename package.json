@@ -1,13 +1,13 @@
 {
   "name": "react-redux-app-cli",
-  "version": "2.0.1",
+  "version": "2.0.3",
   "description": "react-redux-app-cli",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "bin": {
-    "react": "bin/start"
+    "react-redux-app": "bin/start"
   },
   "keywords": [
     "react-redux-app-cli"

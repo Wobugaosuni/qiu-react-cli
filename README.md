@@ -11,7 +11,7 @@ A CLI for scaffolding React.js projects.
 ## Usage
 ```bash
 ## 1
-react init
+react-redux-app init
 
 ## 2
 cd [projece name]
