@@ -9,7 +9,20 @@ A CLI for scaffolding React.js projects.
 <br />
 
 ## Usage
-`$ react init`
+```bash
+## 1
+react init
+
+## 2
+cd [projece name]
+
+## 3
+npm install
+
+## 4
+npm start
+```
+
 
 <br />
 
