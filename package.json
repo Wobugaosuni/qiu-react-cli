@@ -1,0 +1,24 @@
+{
+  "name": "react-cli",
+  "version": "1.0.0",
+  "description": "react-cli",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "react": "bin/start"
+  },
+  "keywords": [
+    "react-cli"
+  ],
+  "author": "Ann Huang <awukalala@gmail.com> (https://github.com/Wobugaosuni/)",
+  "license": "ISC",
+  "devDependencies": {},
+  "dependencies": {
+    "chalk": "^1.1.3",
+    "co": "^4.6.0",
+    "co-prompt": "^1.0.0",
+    "commander": "^2.9.0"
+  }
+}
