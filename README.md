@@ -33,3 +33,42 @@ A CLI for scaffolding React.js projects.
 **Others**
 - Eslint
 
+<br />
+
+## Directory structure
+```
+.
+└── app
+│   ├── reducers
+    ├── actions
+    ├── store
+    ├── common
+    │   └── js
+    │   └── fonts
+    │   └── stylus
+    │       ├── base.styl
+    │       ├── iconfont.styl
+    │       ├── index.styl
+    │       └── mixin.styl
+    ├── components
+    │   ├── Input
+    │   │   ├── index.js
+    │   │   └── index.styl
+    ├── containers
+    │   └── Todo
+    │       ├── index.js
+    │       └── index.styl
+    ├── index.js
+    ├── index.tmpl.html
+├── .babelrc
+├── .postcssrc.js
+├── .eslintrc
+├── .eslintignore
+├── .gitignore
+├── .editorconfig
+├── LICENSE
+├── package.json
+├── README.md
+├── webpack.config.js
+└── webpack.production.config.js
+```
