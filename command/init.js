@@ -11,7 +11,7 @@ module.exports = () => {
     // 处理用户输入
       // let tplName = yield prompt('Template name: ')
       let projectName = yield prompt('Project name: ')
-      let gitUrl = 'https://github.com/Wobugaosuni/react-redux-app-cli'
+      let gitUrl = 'https://github.com/Wobugaosuni/react-redux-app-base.git'
 
     // if (!templates.tpl[tplName]) {
     //     console.log(chalk.red('\n × Template does not exit!'))
