@@ -1,6 +1,6 @@
 {
   "name": "react-redux-app-cli",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "react-redux-app-cli",
   "main": "index.js",
   "scripts": {
