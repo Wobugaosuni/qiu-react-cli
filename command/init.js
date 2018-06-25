@@ -21,15 +21,24 @@ module.exports = () => {
     // branch = templates.tpl[tplName].branch
 
     // git命令，远程拉取项目并自定义项目名
-    let cmdStr = `git clone ${gitUrl} ${projectName} && cd ${projectName} && rm -rf .git`
+    let cmdString = `git clone ${gitUrl} ${projectName} && cd ${projectName} && rm -rf .git`
 
+    // 终端白色字体输出
     console.log(chalk.white('\n Start generating...'))
 
-    exec(cmdStr, (error, stdout, stderr) => {
+    /**
+     * node 模块下
+     * 创建子进程
+     * http://nodejs.cn/api/child_process.html#child_process_child_process_exec_command_options_callback
+     */
+    exec(cmdString, (error, stdout, stderr) => {
+      // 遇到错误，输入错误，停止进程
       if (error) {
         console.log(error)
         process.exit()
       }
+
+      // 成功构建
       console.log(chalk.green('\n √ Generation completed!'))
       console.log(`\n cd ${projectName} && npm install \n`)
       process.exit()

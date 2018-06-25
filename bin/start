@@ -7,20 +7,29 @@ const commander = require('commander')
 
  // 定义当前版本
 commander
-    .version(require('../package').version )
+  .version(require('../package').version )
 
 // 定义使用方法
 commander
-    .usage('<command>')
+  .usage('<command>')
 
+// 项目初始化
 // 定义脚手架支持用户输入的命令
 commander
-    .command('init')
-    .description('Generate a new project')
+  .command('init')
+  .description('Generate a new project')
   .alias('i')
   .action(() => {
     require('../command/init')()
   })
+
+  // 项目模板
+  commander
+    .command('page')
+    .description('add a new page')
+    .action(pageName => {  // 接收输入的参数
+      require('../command/page')(pageName)
+    })
 
 // 处理参数
 commander.parse(process.argv)
