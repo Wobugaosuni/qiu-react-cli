@@ -32,7 +32,7 @@ module.exports = () => {
      * http://nodejs.cn/api/child_process.html#child_process_child_process_exec_command_options_callback
      */
     exec(cmdString, (error, stdout, stderr) => {
-      // 遇到错误，输入错误，停止进程
+      // 遇到错误，输入错误，结束进程
       if (error) {
         console.log(error)
         process.exit()
