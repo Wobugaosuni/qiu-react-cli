@@ -14,9 +14,12 @@ const templates = require('../templates')
 
 module.exports = () => {
  co(function *() {
-    // 处理用户输入
-    // let tplName = yield prompt('Template name: ')
+    /**
+     * 处理用户输入
+     */
+    // 项目名
     let projectName = yield prompt('Project name: ')
+    // 项目描述
     let projectDescribe = yield prompt('project describe: ')
 
     let gitUrl = 'https://github.com/Wobugaosuni/react-redux-app-base.git'
@@ -87,21 +90,20 @@ module.exports = () => {
 
       return new Promise((resolve, reject) => {
         Metalsmith(process.cwd())
-          .metadata(meta)
-          .clean(false)
-          .source(projectName)
-          .destination(projectName)
-          .use((files, metalsmith, done) => {
-            // console.log('files:', files)
-
+          .metadata(meta)  // 要填充的元数据 <object>
+          .clean(false) // 是否清除
+          .source(projectName)  // 源模板
+          .destination(projectName)  // 拷贝到所在的目录
+          .use((files, metalsmith, done) => {  // 模板变量处理
             const meta = metalsmith.metadata()
             Object.keys(files).forEach(fileName => {
               const content = files[fileName].contents.toString()
               files[fileName].contents = new Buffer(Handlebars.compile(content)(meta))
             })
+
             done()
           })
-          .build(err => {
+          .build(err => {  // 编译
             err ? reject(err) : resolve()
           })
       }).then(() => {
