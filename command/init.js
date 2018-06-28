@@ -7,6 +7,8 @@ const commander = require('commander')
 const glob = require('glob')
 const path = require('path')
 const fs = require('fs')
+const Metalsmith = require('metalsmith')
+const Handlebars = require('handlebars')
 
 const templates = require('../templates')
 
@@ -15,6 +17,8 @@ module.exports = () => {
     // 处理用户输入
     // let tplName = yield prompt('Template name: ')
     let projectName = yield prompt('Project name: ')
+    let projectDescribe = yield prompt('project describe: ')
+
     let gitUrl = 'https://github.com/Wobugaosuni/react-redux-app-base.git'
 
     // 不输入，提示必输
@@ -53,8 +57,7 @@ module.exports = () => {
     }
 
     // git命令，远程拉取项目并自定义项目名
-    // let cmdString = `git clone ${gitUrl} ${projectName} && cd ${projectName} && rm -rf .git`
-    let cmdString = `mkdir ${projectName} && cd ${projectName} && git clone ${gitUrl} .temporary && cd .temporary && rm -rf .git`
+    let cmdString = `git clone ${gitUrl} ${projectName} && cd ${projectName} && rm -rf .git`
 
     // 终端白色字体输出
     console.log(chalk.white('\n Start generating...'))
@@ -72,12 +75,41 @@ module.exports = () => {
       }
 
       // 处理模板
+      const meta = {
+        projectName,
+        projectDescribe,
+      }
+      // console.log('__dirname:', __dirname)
+      // console.log('source:', `${projectName}/.temporary`)
+      // console.log('target:', projectName)
+      // console.log('metadata:', meta)
+      // console.log('process.cwd():', process.cwd())
 
+      return new Promise((resolve, reject) => {
+        Metalsmith(process.cwd())
+          .metadata(meta)
+          .clean(false)
+          .source(projectName)
+          .destination(projectName)
+          .use((files, metalsmith, done) => {
+            // console.log('files:', files)
 
-      // 成功构建
-      console.log(chalk.green('\n √ Generation completed!'))
-      console.log(`\n cd ${projectName} && npm install \n`)
-      process.exit()
+            const meta = metalsmith.metadata()
+            Object.keys(files).forEach(fileName => {
+              const content = files[fileName].contents.toString()
+              files[fileName].contents = new Buffer(Handlebars.compile(content)(meta))
+            })
+            done()
+          })
+          .build(err => {
+            err ? reject(err) : resolve()
+          })
+      }).then(() => {
+        // 成功构建
+        console.log(chalk.green('\n √ Generation completed!'))
+        console.log(`\n cd ${projectName} && npm install \n`)
+        process.exit()
+      })
     })
   })
 }
