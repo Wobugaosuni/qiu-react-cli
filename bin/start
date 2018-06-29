@@ -23,13 +23,21 @@ commander
     require('../command/init')()
   })
 
-  // 项目模板
-  commander
-    .command('page')
-    .description('add a new page')
-    .action(pageName => {  // 接收输入的参数
-      require('../command/page')(pageName)
-    })
+// 项目模板
+commander
+  .command('page')
+  .description('add a new page')
+  .action(pageName => {  // 接收输入的参数
+    require('../command/page')(pageName)
+  })
+
+// 个人测试的
+commander
+  .command('test')
+  .description('just test')
+  .action(() => {  // 接收输入的参数
+    require('../command/test')()
+  })
 
 // 处理参数
 commander.parse(process.argv)
