@@ -10,16 +10,20 @@ const Handlebars = require('handlebars')
 const templates = require('../templates')
 
 module.exports = pageName => {
+  console.log('pageName:', pageName);
   // 必输
   if (!pageName) {
     commander.help()
   }
 
+  // 处理模板
+  const meta = {
+    pageName,
+  }
+
   return new Promise((resolve, reject) => {
     Metalsmith(process.cwd())
-      .metadata({
-        pageName,
-      })  // 要填充的元数据 <object>
+      .metadata(meta)  // 要填充的元数据 <object>
       .clean(false) // 是否清除
       .source('template/page')  // 源模板
       .destination(`app/containers/${pageName}`)  // 拷贝到所在的目录
