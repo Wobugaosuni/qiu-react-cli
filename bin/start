@@ -35,6 +35,14 @@ commander
     require('../command/page')(pageName)
   })
 
+// 项目模板
+commander
+  .command('component')
+  .description('add a new component')
+  .action(componentName => {  // 接收输入的参数
+    require('../command/component')(componentName)
+  })
+
 // 个人测试的
 commander
   .command('test')

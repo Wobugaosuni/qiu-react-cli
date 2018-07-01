@@ -9,24 +9,24 @@ const Handlebars = require('handlebars')
 
 const templates = require('../templates')
 
-module.exports = pageName => {
-  console.log('pageName:', pageName);
+module.exports = componentName => {
+  console.log('componentName:', componentName);
   // 必输
-  if (!pageName) {
+  if (!componentName) {
     commander.help()
   }
 
   // 处理模板
   const meta = {
-    pageName,
+    componentName,
   }
 
   return new Promise((resolve, reject) => {
     Metalsmith(process.cwd())
       .metadata(meta)  // 要填充的元数据 <object>
       .clean(false) // 是否清除
-      .source('template/page')  // 源模板
-      .destination(`app/containers/${pageName}`)  // 拷贝到所在的目录
+      .source('template/component')  // 源模板
+      .destination(`app/components/${componentName}`)  // 拷贝到所在的目录
       .use((files, metalsmith, done) => {  // 模板变量处理
         Object.keys(files).forEach(fileName => {
           const content = files[fileName].contents.toString()
@@ -40,7 +40,7 @@ module.exports = pageName => {
       })
   }).then(() => {
     // 成功构建
-    console.log(chalk.green(`\n √ Page ${pageName} Generation completed!`))
+    console.log(chalk.green(`\n √ Component ${componentName} Generation completed!`))
     process.exit()
   })
 }
