@@ -12,9 +12,10 @@ A CLI for scaffolding React.js projects.
 
 ## Usage
 
+- project init
 ```bash
     ## 1. 脚手架初始化
-    react-redux-app init
+    qiu init
 
     ## 2. 建立自己的项目
     cd [projece name]
@@ -29,6 +30,17 @@ A CLI for scaffolding React.js projects.
     npm start
 ```
 
+- new page
+```bash
+    ## 新建一个页面
+    qiu page <name>
+```
+
+- new component
+```bash
+    ## 新建一个组件
+    qiu component <name>
+```
 
 <br />
 
@@ -72,11 +84,11 @@ A CLI for scaffolding React.js projects.
        │       ├── index.styl
        │       └── mixin.styl
        ├── components
-       │   ├── Input
+       │   ├── input
        │   │   ├── index.js
        │   │   └── index.styl
        ├── containers
-       │   └── Todo
+       │   └── todo
        │       ├── index.js
        │       └── index.styl
         ├── index.js
