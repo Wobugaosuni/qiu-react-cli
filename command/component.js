@@ -10,10 +10,11 @@ const Handlebars = require('handlebars')
 const templates = require('../templates')
 
 module.exports = componentName => {
-  console.log('componentName:', componentName);
+  // console.log('componentName:', componentName);
   // 必输
-  if (!componentName) {
-    commander.help()
+  if (typeof(componentName) !== 'string') {
+    console.log('\n Usage: qiu component <name> \n')
+    process.exit()
   }
 
   // 处理模板
