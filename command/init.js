@@ -83,7 +83,7 @@ module.exports = () => {
       }
 
       // 处理模板
-      const meta = {
+      const metaObject = {
         projectName,
         projectDescribe,
       }
@@ -95,15 +95,19 @@ module.exports = () => {
 
       return new Promise((resolve, reject) => {
         Metalsmith(process.cwd())
-          .metadata(meta)  // 要填充的元数据 <object>
+          .metadata(metaObject)  // 要填充的元数据 <object>
           .clean(false) // 是否清除
           .source(projectName)  // 源模板
           .destination(projectName)  // 拷贝到所在的目录
           .use((files, metalsmith, done) => {  // 模板变量处理
-            const meta = metalsmith.metadata()
-            Object.keys(files).forEach(fileName => {
+
+            // console.log('files:', files)  // object
+            // console.log('Object.keys(files):', Object.keys(files))  // list of filename
+
+            // 仅限`package.json`的。不然会覆盖其他的
+            Object.keys(files).filter(filename => filename === 'package.json').forEach(fileName => {
               const content = files[fileName].contents.toString()
-              files[fileName].contents = new Buffer(Handlebars.compile(content)(meta))
+              files[fileName].contents = new Buffer(Handlebars.compile(content)(metaObject))
             })
 
             done()
