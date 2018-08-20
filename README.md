@@ -1,4 +1,4 @@
-## react-redux-app-cli
+## qiu-react-cli
 
 A CLI for scaffolding React.js projects.
 
@@ -6,7 +6,7 @@ A CLI for scaffolding React.js projects.
 
 ## Installation
 
-`$ npm install -g react-redux-app-cli`
+`$ npm install -g qiu-react-cli`
 
 <br />
 
