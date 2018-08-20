@@ -1,7 +1,7 @@
 {
-  "name": "react-redux-app-cli",
-  "version": "2.3.0",
-  "description": "react-redux-app-cli",
+  "name": "qiu-react-cli",
+  "version": "1.0.0",
+  "description": "qiu-react-cli",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -10,7 +10,7 @@
     "qiu": "bin/start"
   },
   "keywords": [
-    "react-redux-app-cli"
+    "qiu-react-cli"
   ],
   "author": "Ann Huang <awukalala@gmail.com> (https://github.com/Wobugaosuni/)",
   "license": "ISC",
