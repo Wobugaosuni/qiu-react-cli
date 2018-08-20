@@ -49,7 +49,7 @@ A CLI for scaffolding React.js projects.
 **Javascript**
 - Language: ES6
 - Loader: Babel
-- Framework: React + Redux + React-router-dom
+- Framework: React + mobx/Redux + React-router-dom
 
 **CSS/Preprocessors**
 - Stylus
@@ -69,6 +69,43 @@ A CLI for scaffolding React.js projects.
 
 ## Directory structure
 
+when mobx chose:
+```
+    .
+    └── app
+        ├── common
+       │   └── js
+       │   └── fonts
+       │   └── stylus
+       │       ├── base.styl
+       │       ├── iconfont.styl
+       │       ├── index.styl
+       │       └── mixin.styl
+       ├── components
+       │   ├── input
+       │   │   ├── index.js
+       │   │   └── index.styl
+       ├── containers
+       │   └── todo
+       │       ├── index.js
+       │       └── index.styl
+       │       └── store.js
+        ├── index.js
+        ├── index.tmpl.html
+    ├── .babelrc
+    ├── .postcssrc.js
+    ├── .eslintrc
+    ├── .eslintignore
+    ├── .gitignore
+    ├── .editorconfig
+    ├── LICENSE
+    ├── package.json
+    ├── README.md
+    ├── webpack.config.js
+    └── webpack.production.config.js
+```
+
+when redux chose:
 ```
     .
     └── app

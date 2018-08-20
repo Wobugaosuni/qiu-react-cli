@@ -9,6 +9,7 @@ const path = require('path')
 const fs = require('fs')
 const Metalsmith = require('metalsmith')
 const Handlebars = require('handlebars')
+const inquirer = require('inquirer')
 
 const templates = require('../templates')
 
@@ -22,7 +23,8 @@ module.exports = () => {
     // 项目描述
     let projectDescribe = yield prompt('project describe: ')
 
-    let gitUrl = 'https://github.com/Wobugaosuni/react-redux-app-base.git'
+    let reduxGitUrl = 'https://github.com/Wobugaosuni/react-redux-app-base.git'
+    let mobxGitUrl = 'https://github.com/Wobugaosuni/react-mobx-app-base.git'
 
     // 不输入，提示必输
     if (!projectName) {
@@ -64,63 +66,76 @@ module.exports = () => {
       })
     }
 
-    // git命令，远程拉取项目并自定义项目名
-    let cmdString = `git clone ${gitUrl} ${projectName} && cd ${projectName} && rm -rf .git`
+    inquirer
+      .prompt([{
+        type: 'list',
+        name: '请选择项目的状态管理工具',
+        choices: ['mobx', 'redux']
+      }])
+      .then(answers => {
+        // console.log('answers:', answers);
 
-    // 终端白色字体输出
-    console.log(chalk.white('\n Start generating...'))
+        let answer = Object.values(answers)[0]
 
-    /**
-     * node 模块下
-     * 创建子进程
-     * http://nodejs.cn/api/child_process.html#child_process_child_process_exec_command_options_callback
-     */
-    exec(cmdString, (error, stdout, stderr) => {
-      // 遇到错误，输入错误，结束进程
-      if (error) {
-        console.log(error)
-        process.exit()
-      }
+        // git命令，远程拉取项目并自定义项目名
+        let cmdString = `git clone ${answer === 'mobx' ? mobxGitUrl : reduxGitUrl} ${projectName} && cd ${projectName} && rm -rf .git`
 
-      // 处理模板
-      const metaObject = {
-        projectName,
-        projectDescribe,
-      }
-      // console.log('__dirname:', __dirname)
-      // console.log('source:', `${projectName}/.temporary`)
-      // console.log('target:', projectName)
-      // console.log('metadata:', meta)
-      // console.log('process.cwd():', process.cwd())
+        // 终端白色字体输出
+        console.log(chalk.white('\n Start generating...'))
 
-      return new Promise((resolve, reject) => {
-        Metalsmith(process.cwd())
-          .metadata(metaObject)  // 要填充的元数据 <object>
-          .clean(false) // 是否清除
-          .source(projectName)  // 源模板
-          .destination(projectName)  // 拷贝到所在的目录
-          .use((files, metalsmith, done) => {  // 模板变量处理
+        /**
+         * node 模块下
+         * 创建子进程
+         * http://nodejs.cn/api/child_process.html#child_process_child_process_exec_command_options_callback
+         */
+        exec(cmdString, (error, stdout, stderr) => {
+          // 遇到错误，输入错误，结束进程
+          if (error) {
+            console.log(error)
+            process.exit()
+          }
 
-            // console.log('files:', files)  // object
-            // console.log('Object.keys(files):', Object.keys(files))  // list of filename
+          // 处理模板
+          const metaObject = {
+            projectName,
+            projectDescribe,
+          }
+          // console.log('__dirname:', __dirname)
+          // console.log('source:', `${projectName}/.temporary`)
+          // console.log('target:', projectName)
+          // console.log('metadata:', meta)
+          // console.log('process.cwd():', process.cwd())
 
-            // 仅限`package.json`的。不然会覆盖其他的
-            Object.keys(files).filter(filename => filename === 'package.json').forEach(fileName => {
-              const content = files[fileName].contents.toString()
-              files[fileName].contents = new Buffer(Handlebars.compile(content)(metaObject))
-            })
+          return new Promise((resolve, reject) => {
+            Metalsmith(process.cwd())
+              .metadata(metaObject)  // 要填充的元数据 <object>
+              .clean(false) // 是否清除
+              .source(projectName)  // 源模板
+              .destination(projectName)  // 拷贝到所在的目录
+              .use((files, metalsmith, done) => {  // 模板变量处理
 
-            done()
+                // console.log('files:', files)  // object
+                // console.log('Object.keys(files):', Object.keys(files))  // list of filename
+
+                // 仅限`package.json`的。不然会覆盖其他的
+                Object.keys(files).filter(filename => filename === 'package.json').forEach(fileName => {
+                  const content = files[fileName].contents.toString()
+                  files[fileName].contents = new Buffer(Handlebars.compile(content)(metaObject))
+                })
+
+                done()
+              })
+              .build(err => {  // 编译
+                err ? reject(err) : resolve()
+              })
+          }).then(() => {
+            // 成功构建
+            console.log(chalk.green('\n √ Generation completed!'))
+            console.log(`\n cd ${projectName} && npm install \n`)
+            process.exit()
           })
-          .build(err => {  // 编译
-            err ? reject(err) : resolve()
-          })
-      }).then(() => {
-        // 成功构建
-        console.log(chalk.green('\n √ Generation completed!'))
-        console.log(`\n cd ${projectName} && npm install \n`)
-        process.exit()
+        })
       })
-    })
+
   })
 }
