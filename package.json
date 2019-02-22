@@ -21,7 +21,7 @@
     "co-prompt": "^1.0.0",
     "commander": "^2.9.0",
     "glob": "^7.1.2",
-    "handlebars": "^4.0.11",
+    "handlebars": "^4.1.0",
     "inquirer": "^6.1.0",
     "metalsmith": "^2.3.0"
   }
