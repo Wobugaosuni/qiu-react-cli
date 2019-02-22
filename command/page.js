@@ -17,6 +17,11 @@ module.exports = pageName => {
     process.exit()
   }
 
+  // 首字母大写
+  const arr = pageName.split('')
+  arr[0] = arr[0].toUpperCase()
+  pageName = arr.join('')
+
   // 处理模板
   const meta = {
     pageName,
