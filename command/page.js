@@ -34,9 +34,23 @@ module.exports = pageName => {
       .source('template/page')  // 源模板
       .destination(`app/containers/${pageName}`)  // 拷贝到所在的目录
       .use((files, metalsmith, done) => {  // 模板变量处理
-        Object.keys(files).forEach(fileName => {
-          const content = files[fileName].contents.toString()
-          files[fileName].contents = new Buffer(Handlebars.compile(content)(meta))
+        let filesList = Object.keys(files)
+        filesList = filesList.filter(item => item !== '.DS_Store')
+        console.log('filesList:', filesList)  // [ 'index.styl', 'index.js', 'layout.js', '{{pageName}}.js' ]
+
+        filesList.forEach(item => {
+          // 获取文件内容
+          const content = files[item].contents.toString()
+
+          // 文件名变量填充、内容填充
+          const newFileName = Handlebars.compile(item)(meta)
+          files[newFileName] = {}
+          files[newFileName].contents = new Buffer(Handlebars.compile(content)(meta))
+
+          // 删除变量名的文件
+          if(item !== newFileName) {
+            delete files[item]
+          }
         })
 
         done()
