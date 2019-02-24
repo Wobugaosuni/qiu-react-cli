@@ -1,13 +1,13 @@
 {
   "name": "qiu-react-cli",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "qiu-react-cli",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "bin": {
-    "qiu": "bin/start"
+    "qiu-test": "bin/start"
   },
   "keywords": [
     "qiu-react-cli"
